@@ -6,3 +6,4 @@ package at.fitosoft.experiments.procedural
 case class Seed(seedValue: Int) {
   def siblingSeed(siblingId: Int): Seed = Seed((seedValue >>> siblingId) | (seedValue << (Integer.SIZE - siblingId)))
 }
+

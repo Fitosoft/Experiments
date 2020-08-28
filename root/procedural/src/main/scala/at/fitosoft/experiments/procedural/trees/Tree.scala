@@ -1,5 +1,6 @@
 package at.fitosoft.experiments.procedural.trees
 
+import at.fitosoft.experiments.procedural.Procedural._
 import at.fitosoft.experiments.procedural.{Procedural, Seed}
 
 object Tree {
@@ -7,13 +8,15 @@ object Tree {
   val BranchSeed: Seed = Seed(88440572)
   val TrunkHeightSeed: Seed = Seed(166546907)
 
-  def apply(seed: Seed): Tree = {
-    val branchCount: Int = Procedural.createNonNegativeInt(seed, BranchCountSeed, 10)
-    val children: Seq[Branch] = (1 to branchCount).map(counter => Branch(BranchSeed.siblingSeed(counter)))
+  def apply(elementSeed: Seed): Tree = {
+    val branchCount: Int = createNonNegativeInt(elementSeed, BranchCountSeed, 8) + 4
+    //println(branchCount)
+    val trunkHeight: Int = createNonNegativeInt(elementSeed, TrunkHeightSeed, 20) + 5
+    val direction: Int = -90
 
-    val trunkHeight: Int = Procedural.createNonNegativeInt(seed, TrunkHeightSeed, 10)
+    val children: Seq[Branch] = (1 to branchCount).map(counter => Branch(BranchSeed.childSeed(counter, elementSeed), 1, trunkHeight, direction))
 
-    Tree(seed, trunkHeight, children)
+    Tree(elementSeed, trunkHeight, children)
   }
 }
 
